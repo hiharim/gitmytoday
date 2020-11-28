@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:theme="?attr/actionBarTheme"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SETTINGS"
+            android:layout_gravity="center"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:textStyle="bold">
+
+        </TextView>
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+
+    <Button
+        android:id="@+id/activity_setting_btn_alarm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:layout_marginTop="20dp"
+        android:text="알람"
+        android:textSize="16dp"
+        android:textAlignment="textStart"
+        app:backgroundTint="#7AA844"
+         />
+
+<!--    <Button-->
+<!--        android:id="@+id/activity_setting_btn_password"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:textSize="16dp"-->
+<!--        android:textAlignment="textStart"-->
+<!--        app:backgroundTint="#7AA844"-->
+<!--        android:text="비밀번호"-->
+<!--        android:gravity="start" />-->
+
+
+</LinearLayout>

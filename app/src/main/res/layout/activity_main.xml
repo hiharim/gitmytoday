@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:theme="?attr/actionBarTheme"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="오늘의일기"
+            android:layout_gravity="center"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:textStyle="bold">
+
+        </TextView>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <Button
+        android:id="@+id/activity_main_btn_write"
+        android:layout_width="361dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
+        android:text="➕    지금 오늘의 기록을 추가하세요!"
+        app:backgroundTint="#7AA844"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+
+    <!--    <LinearLayout-->
+<!--        android:id="@+id/linearLayout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="120dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:background="@drawable/round"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/toolbar">-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/activity_main_et_write"-->
+<!--            android:layout_width="320dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:hint="오늘은..">-->
+
+<!--        </EditText>-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/activity_main_image_btn_save"-->
+<!--            android:layout_width="77dp"-->
+<!--            android:layout_height="78dp"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:layout_marginRight="5dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:background="#EAE5E5"-->
+<!--            app:srcCompat="@drawable/ic_baseline_done_24"-->
+<!--            tools:ignore="VectorDrawableCompat"-->
+<!--            />-->
+
+<!--    </LinearLayout>-->
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/linearLayout2"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:background="@drawable/round"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/linearLayout">-->
+
+
+<!--        <ImageButton-->
+<!--            android:id="@+id/activity_main_image_btn_camera"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="0.1"-->
+<!--            app:srcCompat="@drawable/ic_baseline_add_a_photo_24"-->
+<!--            tools:ignore="VectorDrawableCompat" />-->
+
+<!--        <ImageButton-->
+<!--            android:id="@+id/activity_main_image_btn_location"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="0.1"-->
+<!--            app:srcCompat="@drawable/ic_baseline_room_24"-->
+<!--            tools:ignore="VectorDrawableCompat" />-->
+
+
+<!--&lt;!&ndash;        <ImageButton&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/activity_main_image_btn_emoge"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_weight="0.1"&ndash;&gt;-->
+<!--&lt;!&ndash;            app:srcCompat="@drawable/ic_baseline_emoji_emotions_24"&ndash;&gt;-->
+<!--&lt;!&ndash;            tools:ignore="VectorDrawableCompat" />&ndash;&gt;-->
+
+<!--        <ImageButton-->
+<!--            android:id="@+id/activity_main_image_btn_write"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="0.1"-->
+<!--            app:srcCompat="@drawable/ic_baseline_open_in_full_24"-->
+<!--            tools:ignore="VectorDrawableCompat" />-->
+
+<!--&lt;!&ndash;        <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/tv_spinner"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="match_parent">&ndash;&gt;-->
+<!--&lt;!&ndash;        </TextView>&ndash;&gt;-->
+
+<!--        <Spinner-->
+<!--            android:id="@+id/spinner"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent">-->
+
+<!--        </Spinner>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/activity_main_tv_date"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="0.1"-->
+<!--            android:text="2020년 11월 14일" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/activity_main_tv_time"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="0.1"-->
+<!--            android:text="오후 6시 30분" />-->
+
+
+<!--    </LinearLayout>-->
+
+
+    <com.baoyz.swipemenulistview.SwipeMenuListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:transcriptMode="alwaysScroll"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_main_btn_write" />
+
+    <TextView
+        android:id="@+id/emptyView"
+        android:layout_width="199dp"
+        android:layout_height="84dp"
+        android:layout_marginStart="118dp"
+        android:layout_marginLeft="118dp"
+        android:layout_marginTop="172dp"
+        android:layout_marginEnd="94dp"
+        android:layout_marginRight="94dp"
+        android:text="첫 글을 작성해보세요."
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

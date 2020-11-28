@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<!--    <item-->
+<!--        android:icon="@drawable/ic_baseline_settings_24"-->
+<!--        android:id="@+id/menu_setting"-->
+
+<!--        app:showAsAction="always"-->
+<!--        android:title="설정">-->
+
+<!--    </item>-->
+
+    <item
+        android:id="@+id/menu_search"
+        android:icon="@drawable/ic_baseline_search_24"
+        app:showAsAction="always"
+        android:title="검색">
+
+    </item>
+
+    <item
+        android:id="@+id/menu_statistic"
+        android:icon="@drawable/ic_baseline_insert_chart_outlined_24"
+        app:showAsAction="always"
+        android:title="통계">
+
+    </item>
+
+    <item
+        android:id="@+id/menu_calender"
+        android:icon="@drawable/ic_baseline_calendar_today_24"
+        app:showAsAction="always"
+        android:title="달력">
+
+    </item>
+
+</menu>
