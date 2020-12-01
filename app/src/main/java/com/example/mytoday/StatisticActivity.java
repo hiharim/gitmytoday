@@ -148,9 +148,6 @@ public class StatisticActivity extends AppCompatActivity {
 
 
 
-
-
-
         // x축 설정 (일)
 //        XAxis xAxis=lineChart.getXAxis();
 //        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); //아래쪽에 x축 표시
@@ -168,11 +165,6 @@ public class StatisticActivity extends AppCompatActivity {
 //
 //        LineData data=new LineData();
 //        lineChart.setData(data); //LineData를 세팅함
-
-
-
-
-
 
 
         ArrayList<String> labels = new ArrayList<String>();

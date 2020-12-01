@@ -70,61 +70,39 @@ public class EditActivity extends AppCompatActivity {
     private ImageView imageView;
     private Uri imageUri;
     private Uri photoURI, albumURI;
-
     EditActivity editActivity=this;
-
     Calendar myCalendar = Calendar.getInstance();
     TextView currentTvDate;
     TextView currentTvTime;
     Spinner spinner;
-
-    DatePickerDialog.OnDateSetListener myDatePicker = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            myCalendar.set(Calendar.YEAR, year);
-            myCalendar.set(Calendar.MONTH, month);
-            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            updateLabel();
-        }
-    };
-
-
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
-
-
+        //툴바설정
         Toolbar toolbar=findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_close_24);
 
-
-
         context=this;
-
         //listView 스와이프메뉴 수정 클릭했을때 intent받는 코드
         ivPhotoEdit=(ImageView)findViewById(R.id.activity_edit_iv_photo);
         tvContentEdit=(TextView)findViewById(R.id.activity_edit_et_content);
         tvDateEdit=(TextView)findViewById(R.id.activity_edit_tv_date);
         tvTimeEdit=(TextView)findViewById(R.id.activity_edit_tv_time);
-
         tvLocationEdit=(TextView)findViewById(R.id.activity_edit_tv_location);
-
-
+        
         Intent intent=getIntent();
-
         //https://answerofgod.tistory.com/98 uri 받는법
         final String photo=intent.getStringExtra("EDIT_PHOTO");
         if(photo!= null) {
             Uri uri= Uri.parse(photo);
             ivPhotoEdit.setImageURI(uri);
         }
-
+        
         String content=intent.getExtras().getString("EDIT_CONTENT");
         tvContentEdit.setText(content);
 
@@ -139,15 +117,9 @@ public class EditActivity extends AppCompatActivity {
 
         String location=intent.getExtras().getString("EDIT_LOCATION");
         tvLocationEdit.setText(location);
-
         Log.e("디테일액티비티","받았다"+ivPhotoEdit+tvContentEdit+tvLocationEdit);
 
-
-        /**
-        7. 기분설정 (1~7) : 등간척도
-        스피너
-        */
-
+//      스피너 기분설정
         ArrayList arrayList=new ArrayList<>();
         arrayList.add("1");
         arrayList.add("2");
@@ -159,7 +131,6 @@ public class EditActivity extends AppCompatActivity {
         arrayList.add("8");
         arrayList.add("9");
         arrayList.add("10");
-
 
         spinner=(Spinner)findViewById(R.id.spinnerEdit);
 
@@ -177,9 +148,7 @@ public class EditActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(getApplicationContext(),arrayList.get(i)+"이 선택되었습니다.",
                         Toast.LENGTH_SHORT).show();
-
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
                 return;
@@ -187,17 +156,13 @@ public class EditActivity extends AppCompatActivity {
         });
 
 
-
-        /**
-         8. 날짜,시간 스피너 글쓰는날짜 현재시각보여주기
-         현재 날짜,시각 표시
-         */
+//         8. 날짜,시간 스피너 글쓰는날짜 현재시각보여주기
+//         현재 날짜,시각 표시
 
         currentTvDate=(TextView)findViewById(R.id.activity_edit_tv_date);
         //날짜를 출력하는 텍스트뷰에 오늘 날짜 설정.
         Calendar cal = Calendar.getInstance();
         //currentTvDate.setText(cal.get(Calendar.YEAR) +"-"+ (cal.get(Calendar.MONTH)+1) +"-"+ cal.get(Calendar.DATE));
-
 
         currentTvDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,7 +174,6 @@ public class EditActivity extends AppCompatActivity {
 
             }
         });
-
 
         currentTvTime=(TextView)findViewById(R.id.activity_edit_tv_time);
         Calendar c=Calendar.getInstance();
@@ -224,7 +188,6 @@ public class EditActivity extends AppCompatActivity {
             // TextView에 출력할 형식 지정
             currentTvTime.setText(state + " " + hour + ":" + min );
         }
-
 
         currentTvTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -252,12 +215,10 @@ public class EditActivity extends AppCompatActivity {
         });
 
 
-        /**
-         3. 카메라,사진 업로드
-         이미지뷰 다이얼로그띄워서 카메라or갤러리선택 클릭리스너*
-         카메라 권한획득
 
-         */
+//         3. 카메라,사진 업로드
+//         이미지뷰 다이얼로그띄워서 카메라or갤러리선택 클릭리스너*
+//         카메라 권한획득
         imageView=findViewById(R.id.activity_edit_iv_photo);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -271,49 +232,44 @@ public class EditActivity extends AppCompatActivity {
                         captureCamera();
                     }
                 });
-
-
                 builder.setNeutralButton("앨범에서 사진선택", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         getAlbum();
                     }
                 });
-
                 builder.show();
                 checkPermission();
             }
         });
-
-
-
 
         //장소
         ImageButton locationBtn=findViewById(R.id.activity_edit_image_btn_location);
         locationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                Intent intent=new Intent(getApplicationContext(),LocationActivity.class);
+                startActivityForResult(intent,5555);
             }
         });
-
-
-
-
-
-
-
 
     }//onCreate
 
     private void updateLabel() {
-        String myFormat = "yyyy-MM-dd";    // 출력형식   2020-11-28
+        String myFormat = "yyyy-MM-d";    // 출력형식   2020-11-28
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.KOREA);
-
         currentTvDate.setText(sdf.format(myCalendar.getTime()));
     }
 
+    DatePickerDialog.OnDateSetListener myDatePicker = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, month);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel();
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -329,77 +285,57 @@ public class EditActivity extends AppCompatActivity {
                 finish();
                 break;
 
-
             //일기 저장버튼
             //intent 를 이용해서 MainActivity 로 값을 전달한다.
             case R.id.menu_save:
 
-
                 //인텐트로 메인액티비티로 작성한 일기 값을 보내준다
                 Intent intent=new Intent(this,MainActivity.class);
-
                 //일기 내용 전달
                 EditText et_content=(EditText)findViewById(R.id.activity_edit_et_content);
                 intent.putExtra("EDIT_FINISH_CONTENT",et_content.getText().toString());
-
+                Log.e("수정인텐트보낸다","내용 : "+et_content);
                 //이미지전달
                 imageView=(ImageView)findViewById(R.id.activity_edit_iv_photo);
                 intent.putExtra("EDIT_FINISH_PHOTO",mCurrentPhotoPath);
-
                 //기분 점수 전달
                 spinner=(Spinner)findViewById(R.id.spinnerEdit);
                 String feelings=spinner.getSelectedItem().toString();
                 Log.e("스피너값 확인","기분 :"+feelings);
-
                 intent.putExtra("EDIT_FINISH_FEELING",feelings);
-
                 //날짜 전달
                 String date=currentTvDate.getText().toString();
                 intent.putExtra("EDIT_FINISH_DATE",date);
-
                 //시간 전달
                 String time=currentTvTime.getText().toString();
                 intent.putExtra("EDIT_FINISH_TIME",time);
 
-                //TODO- 네이버지도 API로 현재장소나 검색해서 장소 값 받아오기
-                //일단 하드코딩으로 해놓음
                 //장소 전달
-                String location="집";
-                intent.putExtra("EDIT_FINISH_LOCATION",location);
-
+                tvLocationEdit=(TextView)findViewById(R.id.activity_edit_tv_location);
+                String place=tvLocationEdit.getText().toString();
+                intent.putExtra("EDIT_FINISH_LOCATION", place);
 
                 //setResult에 intent를 넣어주면 onActivityResult에서 이 intent를 받는다
                 setResult(RESULT_OK,intent);
-
                 Toast.makeText(this, "수정되었습니다.", Toast.LENGTH_SHORT).show();
                 finish();
                 break;
-
         }
-
         return super.onOptionsItemSelected(item);
-
     }
-
-
-
-
+    
     //사진 촬영 함수
     private void captureCamera(){
         String state = Environment.getExternalStorageState();
         // 외장 메모리 검사
         if (Environment.MEDIA_MOUNTED.equals(state)) {
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
             Log.e("카메라버튼 클릭","1");
-
             //https://stackoverflow.com/questions/62535856/intent-resolveactivity-returns-null-in-api-30
             //api30이상부터 바뀐거
             if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-
                 Log.e("카메라버튼 클릭","2");
                 File photoFile = null;
-
                 Log.e("카메라버튼 클릭","3");
 
                 try {
@@ -416,7 +352,6 @@ public class EditActivity extends AppCompatActivity {
 
                     // 인텐트에 전달할 때는 FileProvier의 Return값인 content://로만!!, providerURI의 값에 카메라 데이터를 넣어 보냄
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, providerURI);
-
                     startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
                 }
             }
@@ -530,6 +465,31 @@ public class EditActivity extends AppCompatActivity {
 
                     galleryAddPic();
                     imageView.setImageURI(albumURI);
+                }
+                break;
+            // 장소 값 받아오는 부분
+            case 5555:
+                if(resultCode != Activity.RESULT_OK) {
+                    return;
+                }
+               /*
+                LocationActivity를  StartActivityForResult로 실행시키고 난후 requestCode인 5555로 받는다
+                또 LocationActivity에서 실행시킨 SearchLocationActivity에서도 결과값을 받는다.
+                 현재 장소값을 받기 위해서 키값인 LOCATION으로 값을 받는다
+                 장소검색을 통해서 받은 값이면 titleNaver, addressNaver키값으로 받아온다
+                 인텐트를 액티비티 A,B,C 순서대로 실행시켜서 B에서도 A에 데이터 를넘기고
+                 C에서도 A에 데이터를 넘겨줘야하기때문에 일단 다 받아서 null값 방지를 해준다
+                 값을 받고나서 어떤값을 받았는지 WriteActivity에 표시해준다
+               */
+                try{
+                    String key=data.getExtras().getString("LOCATION"," ");
+                    String title=data.getExtras().getString("titleNaver"," ");
+                    String address=data.getExtras().getString("addressNaver"," ");
+                    String location="#"+key+title+"\n"+address;
+                    // 장소 입력되는곳에 setText해준다
+                    tvLocationEdit.setText(location);
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
                 break;
         }

@@ -48,16 +48,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-/**
+/*
   WriteActivity.java - 글쓰기하는 클래스
- 1.
- 2. 카메라,사진 권한허용
- 3. 카메라,사진 업로드
- 4. 일기 작성
- 5. 달력,통계,설정,검색버튼
- 6. 지도api
- 7. 기분설정 (1~10)
- 8. 날짜,시간 피커 현재 날짜 현재시각보여주기
+ 1. 카메라,사진 권한허용
+ 2. 카메라,사진 업로드
+ 3. 일기 작성
+ 4. 달력,통계,설정,검색버튼
+ 5. 기분설정 (1~10)
+ 6. 날짜,시간 피커 현재 날짜 현재시각보여주기
  */
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class WriteActivity extends AppCompatActivity {
@@ -67,40 +65,21 @@ public class WriteActivity extends AppCompatActivity {
     private static final int REQUEST_TAKE_PHOTO = 2222;
     private static final int REQUEST_TAKE_ALBUM = 3333;
     private static final int REQUEST_IMAGE_CROP = 4444;
-
     private String mCurrentPhotoPath;
     private ImageView imageView;
     private Uri imageUri;
     private Uri photoURI, albumURI;
-
     WriteActivity writeActivity=this;
-
     Calendar myCalendar = Calendar.getInstance();
     TextView currentTvDate;
     TextView currentTvTime;
     Spinner spinner;
     TextView currentPlace;
 
-
-    // DatePickerDialog를 생성할 때 인자에 listner를 넣어주는 것은 날짜를 선택하고
-    // 확인을 눌렀을때 발생하는 이벤트를 설정하기 위함이다
-    DatePickerDialog.OnDateSetListener myDatePicker = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            myCalendar.set(Calendar.YEAR, year);
-            myCalendar.set(Calendar.MONTH, month);
-            //날짜선택시 일이 하루 빠른 날짜로 선택되어서 일단 -1해둠..
-            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            updateLabel();
-        }
-    };
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write);
-
         //툴바설정
         Toolbar toolbar=findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -108,12 +87,10 @@ public class WriteActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_close_24);
 
-
-        /**
+        /*
          8. 날짜,시간 스피너 글쓰는날짜 현재시각보여주기
             현재 날짜,시각 표시
          */
-
         currentTvDate=(TextView)findViewById(R.id.activity_write_tv_date);
         //기본값으로 날짜를 출력하는 텍스트뷰에 오늘 날짜로 설정한다
 
@@ -127,7 +104,6 @@ public class WriteActivity extends AppCompatActivity {
         // format에 맞게 출력하기 위한 문자열 변환
         String dDate=formatter1.format(systemTime);
         currentTvDate.setText(dDate);
-
 
         //날짜를 변경하고싶다면 텍스트뷰를 클릭해서 변경한다
         currentTvDate.setOnClickListener(new View.OnClickListener() {
@@ -180,7 +156,6 @@ public class WriteActivity extends AppCompatActivity {
         // 텍스트뷰에 기본값으로 현재시간을 설정해둔다
         currentTvTime.setText(dTime);
 
-
         //텍스트뷰 클릭하면 타임피커가 뜬다
         currentTvTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -204,7 +179,7 @@ public class WriteActivity extends AppCompatActivity {
                         // 텍스트뷰에 출력할 형식 지정
                         currentTvTime.setText(state + " " + selectedHour + ":" + selectedMinute );
 
-                        } //false를 주었을 때는 0~12시간만을 선택할 수 있으며, 따로 오전/오후를 선택할수 있는 버튼이 주어진다
+                    } //false를 주었을 때는 0~12시간만을 선택할 수 있으며, 따로 오전/오후를 선택할수 있는 버튼이 주어진다
                 }, hour, minute, false); // true의 경우 24시간 형식의 TimePicker 출현
 
                 mTimePicker.setTitle("시간 설정");
@@ -213,23 +188,13 @@ public class WriteActivity extends AppCompatActivity {
         });
 
 
-
-
-
-
-
-
-        /**
-         3. 카메라,사진 업로드
-         이미지뷰 다이얼로그띄워서 카메라or갤러리선택 클릭리스너*
-         카메라 권한획득
-
-         */
+//         3. 카메라,사진 업로드
+//         이미지뷰 다이얼로그띄워서 카메라or갤러리선택 클릭리스너*
+//         카메라 권한획득
         imageView=findViewById(R.id.activity_write_iv_photo);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(writeActivity);
                 builder.setTitle("업로드할 이미지 선택");
                 builder.setPositiveButton("카메라로 사진찍기", new DialogInterface.OnClickListener() {
@@ -239,21 +204,16 @@ public class WriteActivity extends AppCompatActivity {
                     }
                 });
 
-
                 builder.setNeutralButton("앨범에서 사진선택", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         getAlbum();
                     }
                 });
-
                 builder.show();
                 checkPermission();
             }
         });
-
-
-
 
         //장소 선택버튼
         //장소버튼을 누르면 LocationActivity로 이동한다
@@ -267,12 +227,7 @@ public class WriteActivity extends AppCompatActivity {
             }
         });
 
-
-        /**
-         7. 기분설정 (1~10) : 등간척도
-            스피너
-         */
-
+        // 7. 기분설정 (1~10) : 등간척도 스피너
         ArrayList arrayList=new ArrayList<>();
         arrayList.add("1");
         arrayList.add("2");
@@ -285,9 +240,7 @@ public class WriteActivity extends AppCompatActivity {
         arrayList.add("9");
         arrayList.add("10");
 
-
         spinner=(Spinner)findViewById(R.id.spinner);
-
         ArrayAdapter arrayAdapter=new ArrayAdapter(this,R.layout.support_simple_spinner_dropdown_item,arrayList);
         spinner.setAdapter(arrayAdapter);
 
@@ -302,14 +255,12 @@ public class WriteActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(getApplicationContext(),arrayList.get(i)+"이 선택되었습니다.",
                         Toast.LENGTH_SHORT).show();
-
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
                 return;
             }
         });
-
 
     }//onCreate
 
@@ -372,7 +323,6 @@ public class WriteActivity extends AppCompatActivity {
                  C에서도 A에 데이터를 넘겨줘야하기때문에 일단 다 받아서 null값 방지를 해준다
                  값을 받고나서 어떤값을 받았는지 WriteActivity에 표시해준다
                */
-
                 try{
                     String key=data.getExtras().getString("LOCATION"," ");
                     String title=data.getExtras().getString("titleNaver"," ");
@@ -388,6 +338,18 @@ public class WriteActivity extends AppCompatActivity {
         }
     }
 
+    // DatePickerDialog를 생성할 때 인자에 listner를 넣어주는 것은 날짜를 선택하고
+    // 확인을 눌렀을때 발생하는 이벤트를 설정하기 위함이다
+    DatePickerDialog.OnDateSetListener myDatePicker = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, month);
+            //날짜선택시 일이 하루 빠른 날짜로 선택되어서 일단 -1해둠..
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel();
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -402,7 +364,6 @@ public class WriteActivity extends AppCompatActivity {
                 Toast.makeText(this, "취소버튼을 눌렀습니다.", Toast.LENGTH_SHORT).show();
                 finish();
                 break;
-
 
             //일기 저장버튼
             //intent 를 이용해서 MainActivity 로 값을 전달한다.
@@ -437,15 +398,12 @@ public class WriteActivity extends AppCompatActivity {
 
                 //setResult에 intent를 넣어주면 onActivityResult에서 이 intent를 받는다
                 setResult(RESULT_OK,intent);
-
                 Toast.makeText(this, "일기가 저장되었습니다.", Toast.LENGTH_SHORT).show();
                 finish();
                 break;
-
         }
 
         return super.onOptionsItemSelected(item);
-
     }
 
 

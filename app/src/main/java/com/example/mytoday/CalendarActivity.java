@@ -1,6 +1,7 @@
 package com.example.mytoday;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -11,6 +12,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.icu.util.Calendar;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -22,6 +24,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
@@ -29,11 +32,18 @@ import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.format.DateTimeFormatter;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Executors;
+
+import javax.inject.Singleton;
 
 public class CalendarActivity extends AppCompatActivity {
 
@@ -55,6 +65,8 @@ public class CalendarActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         context=this;
+        AndroidThreeTen.init(this);
+
         CalendarAdapter adapter;
 
         //만약 저장되어있는 리스트가 없다면 diaryList객체를 생성한다
@@ -93,11 +105,13 @@ public class CalendarActivity extends AppCompatActivity {
         });
 
 
+
         // 달력 날짜 클릭시 이벤트
         // 여기서 저장된 데이터를 볼 수 있도록 구현해야한다
         // 클릭한 날짜에 맞는 diaryList를 출력하기 위해서 날짜를 String변수 clickDate에 넣어둠
         // 조건문으로 비교하여 필터링을 해서 조건에 맞는 리스트만 보여준다
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
                 // diaryList의 SAVEDATE 와 같은 형식으로 변수를 설정한다
@@ -109,7 +123,6 @@ public class CalendarActivity extends AppCompatActivity {
                 clickDate=clickDate.replace("}","");
 
                 Toast.makeText(getApplicationContext(), "클릭 "+ clickDate+" 이다", Toast.LENGTH_SHORT).show();
-
                /*
                 1. 일기 전체리스트의 인덱스 0부터 전체리스트의 사이즈 만큼 하나 하나 돌아가면서 반복문을 돈다
                 2. 반복문을 돌면서 조건을 체크한다
@@ -117,13 +130,10 @@ public class CalendarActivity extends AppCompatActivity {
                 4. 만약 클릭한 날짜와 일기에 저장되어있는 날짜가 같으면 반복문을 빠져나와서 해당 날짜의 일기리스트를 보여준다
                */
                 for(int i=0; i<calendarList.size(); i++) {
-                    // 어떻게 비교할건지에 대한 코드
-                    // 어댑터에서 데이터를 가져온다??
                     i=adapter.itemPosition;
                   //  DiaryData calendarData=adapter.getItem(i); // 에러
                     DiaryData calendarData=calendarList.get(i);
                     Log.e("캘린더액티비티","i : "+i);
-
                     //날짜데이터를 가져와서 String 변수 값에 넣어준다
                     String saveDate=calendarData.getDate();
 
@@ -158,11 +168,23 @@ public class CalendarActivity extends AppCompatActivity {
             }
         });
 
+        //달력에 이벤트있는 날짜 빨간점 표시
+ //       for (int j = 1; j <=31; j++) {
+//
+ //           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-d");
+  //          LocalDate localDate=LocalDate.parse(saveDate,formatter);
+   //         calendarView.addDecorator(new EventDecorator(Color.RED,Collections.singleton(CalendarDay.from(LocalDate.parse(localDate.format(formatter))))));
+    //        break;
+     //   }
+
+
+
+
+
     }//onCreate
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.menu_swipe, menu) ;
         return true ;
     }
@@ -190,7 +212,6 @@ public class CalendarActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
 
-                    // (String content, String feelings, String date, String time, String photo, String location)
                     String loadContent = jsonObject.getString("saveContent");
                     String loadFeelings = jsonObject.getString("saveFeelings");
                     String loadDate = jsonObject.getString("saveDate");
@@ -199,7 +220,6 @@ public class CalendarActivity extends AppCompatActivity {
                     String loadLocation = jsonObject.getString("saveLocation");
 
                     DiaryData saveDiary = new DiaryData(loadContent, loadFeelings, loadDate, loadTime,loadPhoto, loadLocation);
-
                     items.add(saveDiary);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -209,4 +229,7 @@ public class CalendarActivity extends AppCompatActivity {
         return items;
     }
 
+
 }//class
+
+

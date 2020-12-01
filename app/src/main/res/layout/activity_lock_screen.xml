@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LockScreenActivity">
+
+<!--    비밀번호 입력 액티비티-->
+
+    <TextView
+        android:layout_marginTop="30dp"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="암호 입력"
+        android:textSize="25dp"
+        android:gravity="center_horizontal" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        android:inputType="numberPassword"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="50dp"
+        android:maxLength="4"
+        android:id="@+id/activity_lock_screen_et_password"
+        android:hint="비밀번호를 입력하세요 (숫자 4자리)"/>
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/passwords"-->
+<!--        android:layout_marginTop="40dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal">-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/etPassword1"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:gravity="center"-->
+<!--            android:inputType="textPassword|number"-->
+<!--            android:maxLength="1"-->
+<!--            android:singleLine="true"-->
+<!--            android:textColor="#000000"-->
+<!--            android:textSize="40dp" />-->
+
+
+<!--        <EditText-->
+<!--            android:id="@+id/etPassword2"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:gravity="center"-->
+<!--            android:inputType="textPassword|number"-->
+<!--            android:maxLength="1"-->
+<!--            android:singleLine="true"-->
+<!--            android:textColor="#000000"-->
+<!--            android:textSize="40dp" />-->
+<!--        <EditText-->
+<!--            android:id="@+id/etPassword3"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:gravity="center"-->
+<!--            android:inputType="textPassword|number"-->
+<!--            android:maxLength="1"-->
+<!--            android:singleLine="true"-->
+<!--            android:textColor="#000000"-->
+<!--            android:textSize="40dp" />-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/etPassword4"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:gravity="center"-->
+<!--            android:inputType="textPassword|number"-->
+<!--            android:maxLength="1"-->
+<!--            android:singleLine="true"-->
+<!--            android:textColor="#000000"-->
+<!--            android:textSize="40dp" />-->
+
+<!--    </LinearLayout>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="30dp"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <TableLayout
+            android:id="@+id/tl_keys"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:gravity="bottom"
+            android:shrinkColumns="*"
+            android:stretchColumns="*">
+
+            <TableRow>
+
+                <Button
+                    android:id="@+id/btn1"
+                    android:layout_width="110dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textSize="18dp" />
+
+                <Button
+                    android:id="@+id/btn2"
+                    android:layout_width="110dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:text="2"
+                    android:textSize="18dp" />
+
+                <Button
+                    android:id="@+id/btn3"
+                    android:layout_width="110dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:text="3"
+                    android:textSize="18dp" />
+
+
+            </TableRow>
+
+            <TableRow>
+
+                <Button
+                    android:id="@+id/btn4"
+                    android:layout_width="110dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="10dp"
+                    android:text="4"
+                    android:textSize="18dp" />
+
+                <Button
+                    android:id="@+id/btn5"
+                    android:layout_width="110dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="10dp"
+                    android:text="5"
+                    android:textSize="18dp" />
+
+                <Button
+                    android:id="@+id/btn6"
+                    android:layout_width="110dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="10dp"
+                    android:text="6"
+                    android:textSize="18dp" />
+
+
+            </TableRow>
+
+            <TableRow>
+
+                <Button
+                    android:id="@+id/btn7"
+                    android:layout_width="110dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="10dp"
+                    android:text="7"
+                    android:textSize="18dp" />
+
+                <Button
+                    android:id="@+id/btn8"
+                    android:layout_width="110dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="10dp"
+                    android:text="8"
+                    android:textSize="18dp" />
+
+                <Button
+                    android:id="@+id/btn9"
+                    android:layout_width="110dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="10dp"
+                    android:text="9"
+                    android:textSize="18dp" />
+
+
+            </TableRow>
+
+            <TableRow>
+
+                <Button
+                    android:id="@+id/btnClear"
+                    android:layout_width="110dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="10dp"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:text="CLEAR" />
+
+                <Button
+                    android:id="@+id/btn0"
+                    android:layout_width="110dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="10dp"
+                    android:text="0"
+                    android:textSize="18dp" />
+
+                <Button
+                    android:id="@+id/btnErase"
+                    android:layout_width="110dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="10dp"
+                    android:text="DEL" />
+
+
+            </TableRow>
+
+        </TableLayout>
+
+
+    </LinearLayout>
+
+
+
+    <Button
+        android:id="@+id/activity_lock_screen_btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="확인" />
+
+
+
+
+</LinearLayout>

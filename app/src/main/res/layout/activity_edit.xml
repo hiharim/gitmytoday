@@ -68,7 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="12dp"
             android:textSize="16dp"
             android:text="기분 :" />
 
@@ -109,7 +109,7 @@
         android:layout_height="98dp"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="336dp"
+        android:layout_marginTop="300dp"
         android:layout_marginEnd="297dp"
         android:layout_marginRight="297dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -129,12 +129,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_edit_iv_photo">
 
-        <ImageView
-            android:id="@+id/activity_edit_iv_location"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            app:srcCompat="@drawable/ic_baseline_room_24"
-            tools:ignore="VectorDrawableCompat" />
+<!--        <ImageView-->
+<!--            android:id="@+id/activity_edit_iv_location"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            app:srcCompat="@drawable/ic_baseline_room_24"-->
+<!--            tools:ignore="VectorDrawableCompat" />-->
 
         <TextView
             android:id="@+id/activity_edit_tv_location"

@@ -56,16 +56,6 @@ public class DiaryAdapter extends ArrayAdapter<DiaryData> {
         TextView tv_location;
     }
 
-    public void addItem(DiaryData item) {
-        list.add(item);
-        notifyDataSetChanged();
-    }
-
-    public void setItem(DiaryData item) {
-        list.set(itemPosition, item);
-
-    }
-
 
     /**
      * getView() 메소드는 실제로 CustomListView의 아이템을 구성하는 메소드로, 사용하려는 레이아웃xml파일로부터
@@ -88,8 +78,6 @@ public class DiaryAdapter extends ArrayAdapter<DiaryData> {
             //layout xml파일로부터 view객체를 생성
             view = inflater.inflate(R.layout.item_diary, null);
         }
-
-
             /*
             생성한 view 객체로부터 설정해야하는 뷰를 획득
             이 경우 위에서 생성한 view를 가져오는 것이므로
@@ -102,7 +90,6 @@ public class DiaryAdapter extends ArrayAdapter<DiaryData> {
         TextView tv_feeling = (TextView) view.findViewById(R.id.item_diary_tv_feeling);
         //TODO -장소 하드코딩해놓은거 고치기
         TextView tv_location = (TextView) view.findViewById(R.id.item_diary_tv_location);
-
 
         //listView포지션에 따른 데이터를 로드
         final DiaryData diaryData = list.get(position);
@@ -124,7 +111,7 @@ public class DiaryAdapter extends ArrayAdapter<DiaryData> {
 //                Intent intent = new Intent(getContext(), DetailActivity.class);
 //                 /*
 //                intent로 데이터 전송하여 이동
-//                DetailActivity에서 받은 books key값으로 현재 bookList의 position값 전달
+//                DetailActivity에서 받은 books key값으로 현재 diaryList의 position값 전달
 //                */
 //                //intent.putExtra("Click",diaryList.get(position));
 //                intent.putExtra("CLICK_PHOTO", diaryData.getPhoto());
@@ -138,8 +125,6 @@ public class DiaryAdapter extends ArrayAdapter<DiaryData> {
 //
 //            }
 //        });
-
-
         return view;
     }
 
@@ -148,6 +133,18 @@ public class DiaryAdapter extends ArrayAdapter<DiaryData> {
         list.remove(object);
         notifyDataSetChanged();
     }
+
+    public void addItem(DiaryData item) {
+        list.add(item);
+        notifyDataSetChanged();
+    }
+
+    public void setItem(DiaryData item) {
+        list.set(itemPosition,item);
+        notifyDataSetChanged();
+    }
+
+
 
     public List<DiaryData> getMyList() {
         return list;

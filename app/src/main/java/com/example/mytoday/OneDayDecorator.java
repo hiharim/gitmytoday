@@ -14,13 +14,12 @@ import java.sql.Date;
 
 public class OneDayDecorator implements DayViewDecorator {
 
-
-
     private CalendarDay date;
 
     public OneDayDecorator(){
         date=CalendarDay.today();
     }
+
 
 
     @Override
