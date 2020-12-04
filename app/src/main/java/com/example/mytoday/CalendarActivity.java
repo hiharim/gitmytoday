@@ -104,17 +104,13 @@ public class CalendarActivity extends AppCompatActivity {
             }
         });
 
-
-
         // 달력 날짜 클릭시 이벤트
-        // 여기서 저장된 데이터를 볼 수 있도록 구현해야한다
         // 클릭한 날짜에 맞는 diaryList를 출력하기 위해서 날짜를 String변수 clickDate에 넣어둠
-        // 조건문으로 비교하여 필터링을 해서 조건에 맞는 리스트만 보여준다
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-                // diaryList의 SAVEDATE 와 같은 형식으로 변수를 설정한다
+                // diaryList의 SAVEDATE 와 같은 형식으로 변수를 설정한다 //todo : savedata가무엇인지쓰기
                 // 달력에서 얻은 정보인 clickDate와 diaryList의 날짜를 비교한다
                 // 왜? 해당 날짜에 맞는 일기리스트만 보여주기 위해서
                 String clickDate=date.toString();
@@ -123,7 +119,7 @@ public class CalendarActivity extends AppCompatActivity {
                 clickDate=clickDate.replace("}","");
 
                 Toast.makeText(getApplicationContext(), "클릭 "+ clickDate+" 이다", Toast.LENGTH_SHORT).show();
-               /*
+               /* todo: 왜 쓰기..동일한이유 뿌려준다 명확한단어로바꾸기
                 1. 일기 전체리스트의 인덱스 0부터 전체리스트의 사이즈 만큼 하나 하나 돌아가면서 반복문을 돈다
                 2. 반복문을 돌면서 조건을 체크한다
                 3. 달력에서 클릭한 날짜와 일기에 저장되어있는 날짜가 같은지 체크한다
@@ -155,7 +151,6 @@ public class CalendarActivity extends AppCompatActivity {
                 // 현재가지고있는 DiaryData의 포지션 값들을 받아와서 DetailActivity로 인텐트값 넘겨주기 위해서
                 DiaryData ClickDiary=adapter.getItem(position);
                 Log.e("CalendarActivity","검색아이템클릭 포지션값"+calendarList.get(position));
-
                 Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
                 intent.putExtra("CLICK_PHOTO", ClickDiary.getPhoto());
                 intent.putExtra("CLICK_CONTENT", ClickDiary.getContent());
@@ -163,7 +158,6 @@ public class CalendarActivity extends AppCompatActivity {
                 intent.putExtra("CLICK_TIME", ClickDiary.getTime());
                 intent.putExtra("CLICK_FEELING", ClickDiary.getFeelings());
                 intent.putExtra("CLICK_LOCATION", ClickDiary.getLocation());
-
                 view.getContext().startActivity(intent);
             }
         });
@@ -177,10 +171,6 @@ public class CalendarActivity extends AppCompatActivity {
     //        break;
      //   }
 
-
-
-
-
     }//onCreate
 
     @Override
@@ -190,13 +180,11 @@ public class CalendarActivity extends AppCompatActivity {
     }
 
     public boolean onOptionsItemSelected(MenuItem item){
-
         switch(item.getItemId()) {
             case android.R.id.home:
                 Toast.makeText(this, "뒤로버튼을 눌렀습니다.", Toast.LENGTH_SHORT).show();
                 finish();
                 break;
-
         }
         return super.onOptionsItemSelected(item);
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context=".StatisticActivity">
+    tools:context=".StatActivity">
 
 
     <androidx.appcompat.widget.Toolbar
@@ -38,7 +38,7 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/activity_statistic_btn_before"
+            android:id="@+id/activity_stat_btn_before"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
@@ -47,7 +47,7 @@
             tools:ignore="VectorDrawableCompat" />
 
         <TextView
-            android:id="@+id/activity_statistic_tv_year"
+            android:id="@+id/activity_stat_tv_year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
@@ -63,7 +63,7 @@
             android:layout_marginRight="20dp"
             android:textSize="20dp" />
         <TextView
-            android:id="@+id/activity_statistic_tv_month"
+            android:id="@+id/activity_stat_tv_month"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="7"
@@ -80,28 +80,21 @@
             android:textSize="20dp" />
 
         <ImageButton
-            android:id="@+id/activity_statistic_btn_after"
+            android:id="@+id/activity_stat_btn_after"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="50dp"
+            android:layout_marginRight="20dp"
             android:layout_marginLeft="50dp"
             app:srcCompat="@drawable/ic_baseline_arrow_right_24"
             tools:ignore="VectorDrawableCompat" />
     </LinearLayout>
 
-<!--    <lecho.lib.hellocharts.view.LineChartView-->
-<!--        android:id="@+id/chart"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="356dp"-->
-<!--        android:layout_marginBottom="152dp"-->
-<!--         />-->
-
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/chart"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="204dp"
-             />
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/activity_stat_chart"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="204dp"
+        />
 
 </LinearLayout>

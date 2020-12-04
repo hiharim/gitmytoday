@@ -231,7 +231,6 @@ public class MainActivity extends AppCompatActivity {
             * @param position 클릭 한 Item의 position
             * @param id 클릭 된 Item의 Id
             */
-
             // DiaryAdapter의 변수 itemPosition을 position값으로 둔다
             // 현재가지고있는 DiaryData의 포지션 값들을 받아와서 DetailActivity로 인텐트값 넘겨주기 위해서
 //            position=adapter.itemPosition;
@@ -389,7 +388,8 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.menu_statistic:
                 Toast.makeText(this, "통계버튼을 눌렀습니다.", Toast.LENGTH_SHORT).show();
-                Intent data=new Intent(this,StatisticActivity.class);
+               // Intent data=new Intent(this,StatisticActivity.class);
+                Intent data=new Intent(this,StatActivity.class);
                 startActivity(data);
                 break;
 

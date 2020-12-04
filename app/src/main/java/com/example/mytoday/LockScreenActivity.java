@@ -46,7 +46,6 @@ public class LockScreenActivity extends Activity {
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON |
                 WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
 
-
 //        SharedPreferences preferences=getSharedPreferences("SAVE_SCREEN_LOCK",MODE_PRIVATE);
 //        String getPassword=preferences.getString("SAVE_PASSWORD","");
 //        boolean getStatus=preferences.getBoolean("SAVE_STATUS",false);
@@ -167,12 +166,6 @@ public class LockScreenActivity extends Activity {
             }
         });
 
-
-        // SettingActivity 에서 보낸 Intent받는 부분
-        //
-
-
-
         // 확인버튼
         Button saveBtn=(Button)findViewById(R.id.activity_lock_screen_btn_save);
         saveBtn.setOnClickListener(new View.OnClickListener() {
@@ -184,14 +177,11 @@ public class LockScreenActivity extends Activity {
 //                4. 쉐어드에 저장되어있는 boolean값을 불러와서 false이면 초기 비밀번호를 설정하는 코드로 동작한다.
 //                5. 쉐어드에 저장되어있는  boolean값이 true라면 이것은 비밀번호를 체크하는 코드로 동작한다.
 //                6. 비밀번호를 체크하는 코드는 쉐어드에 저장되어있는 비밀번호값을 불러오고 edittext에 입력한 값과 비교해서 맞으면 잠금화면을 해지하고 틀리면 toast메세지를 띄운다.
-
                //inputType(getIntent().getExtras().getInt(AppLockShared.type));
 //                SharedPreferences preferences=getSharedPreferences("SAVE_SCREEN_LOCK",MODE_PRIVATE);
 //                boolean getStatus=preferences.getBoolean("SAVE_STATUS",false);
-
                 Intent intent=getIntent();
                 int type = 0;
-
                 try{
                     type=intent.getExtras().getInt(AppLockShared.type); //null
                 }catch (Exception e){
@@ -207,10 +197,8 @@ public class LockScreenActivity extends Activity {
                     inputType(AppLockShared.MAIN_PASSLOCK);
                     isLock=true;
                 }
-
             }
         });
-
 
     }//onCreate
 
@@ -254,7 +242,6 @@ public class LockScreenActivity extends Activity {
                     intent.putExtra("LOCK_STATUS",AppLockShared.UNLOCK_PASSLOCK);
                     setResult(RESULT_OK,intent);
                     finish();
-
                 }else {
                     Animation shake= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.shake);
                     etPassword.startAnimation(shake);
@@ -270,7 +257,6 @@ public class LockScreenActivity extends Activity {
                 SharedPreferences pref=getSharedPreferences("SAVE_SCREEN_LOCK",MODE_PRIVATE);
                 String getPass=pref.getString("SAVE_PASSWORD","");
                 boolean getStat=pref.getBoolean("SAVE_STATUS",false);
-
                 Log.e("쉐어드 꺼냄 잠금화면","SAVE_PASSWORD"+getPass);
                 Log.e("쉐어드 꺼냄 잠금화면","SAVE_STATUS"+getStat);
 
@@ -281,17 +267,13 @@ public class LockScreenActivity extends Activity {
                     intent.putExtra("LOCK_STATUS",AppLockShared.UNLOCK_PASSLOCK);
                     startActivity(intent);
                     finish();
-
                 }else {
                     Animation shake= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.shake);
                     etPassword.startAnimation(shake);
                     Toast.makeText(getApplicationContext(), "비밀번호가 틀렸습니다", Toast.LENGTH_SHORT).show();
                     etPassword.setText("");
                 }
-
                 break;
-
-
 
         }
     }
