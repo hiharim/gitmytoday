@@ -16,6 +16,7 @@ public class GraphAxisValueFormatter extends ValueFormatter implements IAxisValu
 
     @Override
     public String getFormattedValue(float value, AxisBase axis) {
+        value=value/10;
 
         return mDays[(int)value];
     }

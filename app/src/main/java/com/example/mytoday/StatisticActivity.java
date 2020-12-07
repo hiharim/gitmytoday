@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.icu.text.AlphabeticIndex;
 import android.media.Image;
 import android.os.Bundle;
+import android.renderscript.Sampler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -36,13 +37,18 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import lecho.lib.hellocharts.gesture.ChartTouchHandler;
 import lecho.lib.hellocharts.gesture.ZoomType;
 import lecho.lib.hellocharts.listener.ColumnChartOnValueSelectListener;
+import lecho.lib.hellocharts.listener.LineChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Line;
@@ -57,25 +63,28 @@ public class StatisticActivity extends AppCompatActivity {
 
     //선 그래프
     private LineChart lineChart;
-
     private static String SPECIFIC_JSON="DIARY_SAVED_FILE";
     ArrayList<DiaryData> diaryList;
     DiaryAdapter adapter;
-
     ArrayList<ChartData> chartList;
-    ChartData chartData;
     ArrayList<String> labelList = new ArrayList<>(); // ArrayList 선언
-
     static Context context;
-
     LineChartView lineChartView;
     // x축 x값
     String[] axisData={"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18"
                         ,"19","20","21","22","23","24","25","26","27","28","29","30","31"};
 
     // y값 x축에 대응하는 , 여기서는 기분점수
-    int[] yAxisData={};
+    int[] yAxisData={1,2,3,4,5,6,7,8,9,10};
 
+
+    TextView tvYear;
+    TextView tvMonth;
+    String currentYear,currentMonth;
+    public final static String[] days=new String[]{"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18"
+                        ,"19","20","21","22","23","24","25","26","27","28","29","30","31"};
+
+    public final static Integer[] scores=new Integer[]{1,2,3,4,5,6,7,8,9,10};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,27 +99,13 @@ public class StatisticActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_ios_24);
 
-//        ArrayList<Entry> entry_chart = new ArrayList<>();
-//        lineChart = (LineChart) findViewById(R.id.chart);
-//        LineData chartData = new LineData();
-//
-//        entry_chart.add(new Entry(x, y값));
-//
-//
-//    /* 만약 (2, 3) add하고 (2, 5)한다고해서
-//    기존 (2, 3)이 사라지는게 아니라 x가 2인곳에 y가 3, 5의 점이 찍힘 */
-//
-//        LineDataSet lineDataSet = new LineDataSet(entry_chart, "꺽은선1");
-//        chartData.addDataSet(lineDataSet);
-//        lineChart.setData(chartData);
-//        lineChart.invalidate();
 
         ImageButton beforeBtn=(ImageButton) findViewById(R.id.activity_statistic_btn_before);
         ImageButton afterBtn=(ImageButton) findViewById(R.id.activity_statistic_btn_after);
 
 
 
-        lineChart = (LineChart) findViewById(R.id.chart);
+ //       lineChart = (LineChart) findViewById(R.id.chart);
         //만약 저장되어있는 리스트가 없다면 diaryList객체를 생성한다
         if(null == diaryList){
             diaryList=new ArrayList<DiaryData>();
@@ -123,28 +118,10 @@ public class StatisticActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
         // diaryList ->  {2020-11-14, 7}
 
         Log.e("chartList","불러온다 : "+chartList.get(0)+chartList.get(1));
 
-//        ArrayList<Entry> entries = new ArrayList<>();
-//        entries.add(new Entry(4f, 0));
-//        entries.add(new Entry(8f, 1));
-//        entries.add(new Entry(6f, 2));
-//        entries.add(new Entry(2f, 3));
-//        entries.add(new Entry(18f, 4));
-//        entries.add(new Entry(9f, 5));
-//        entries.add(new Entry(16f, 6));
-//        entries.add(new Entry(5f, 7));
-//        entries.add(new Entry(3f, 8));
-//        entries.add(new Entry(7f, 10));
-//        entries.add(new Entry(9f, 11));
-//
-//        LineDataSet dataset = new LineDataSet(entries, "# of Calls");
-
-//        List<Entry> entries=new ArrayList<>();
-//        entries.add(new Entry(Float.parseFloat(chartData.getScore()),Integer.parseInt(chartData.getDay())));
 
 
 
@@ -167,38 +144,38 @@ public class StatisticActivity extends AppCompatActivity {
 //        lineChart.setData(data); //LineData를 세팅함
 
 
-        ArrayList<String> labels = new ArrayList<String>();
-        labels.add("1");
-        labels.add("2");
-        labels.add("3");
-        labels.add("4");
-        labels.add("5");
-        labels.add("6");
-        labels.add("7");
-        labels.add("8");
-        labels.add("9");
-        labels.add("10");
-        labels.add("11");
-        labels.add("12");
-        labels.add("13");
-        labels.add("14");
-        labels.add("15");
-        labels.add("16");
-        labels.add("17");
-        labels.add("18");
-        labels.add("19");
-        labels.add("20");
-        labels.add("21");
-        labels.add("22");
-        labels.add("23");
-        labels.add("24");
-        labels.add("25");
-        labels.add("26");
-        labels.add("27");
-        labels.add("28");
-        labels.add("29");
-        labels.add("30");
-        labels.add("31");
+//        ArrayList<String> labels = new ArrayList<String>();
+//        labels.add("1");
+//        labels.add("2");
+//        labels.add("3");
+//        labels.add("4");
+//        labels.add("5");
+//        labels.add("6");
+//        labels.add("7");
+//        labels.add("8");
+//        labels.add("9");
+//        labels.add("10");
+//        labels.add("11");
+//        labels.add("12");
+//        labels.add("13");
+//        labels.add("14");
+//        labels.add("15");
+//        labels.add("16");
+//        labels.add("17");
+//        labels.add("18");
+//        labels.add("19");
+//        labels.add("20");
+//        labels.add("21");
+//        labels.add("22");
+//        labels.add("23");
+//        labels.add("24");
+//        labels.add("25");
+//        labels.add("26");
+//        labels.add("27");
+//        labels.add("28");
+//        labels.add("29");
+//        labels.add("30");
+//        labels.add("31");
 
         /*
         1.  x축에 일 을 표현할 1~31 하드코딩, y축에 기분점수를 표현 1~10 하드코딩
@@ -210,89 +187,81 @@ public class StatisticActivity extends AppCompatActivity {
         7. 데이터들을 그래프에 set해준다
         */
 
-        TextView tvMonth=(TextView)findViewById(R.id.tvMonth);
-
-        Calendar calendar= Calendar.getInstance();
-        SimpleDateFormat format=new SimpleDateFormat( "mm");
-        String date=format.format(Calendar.getInstance().getTime());
-        tvMonth.setText(date);
-
-        for(int i=0; i< chartList.size(); i++) {
-            ChartData chartData=chartList.get(i);
-
-            //차트데이터를 가져와서 String 변수에 담는다
-            String sameMonth=chartData.getMonth();
-
-            if (date.equals(sameMonth)) {
-                String sameDay=chartData.getDay();
-                String sameFeel=chartData.getScore();
-
-                for(int j=0; j<sameMonth.length(); j++){
-                    String dayPoint = chartData.getDay();
-                    float dayScore = Float.parseFloat(chartData.getScore());
-
-                    GraphData graphData=new GraphData(dayPoint,dayScore);
-                    ArrayList<GraphData> graphDataList=new ArrayList<>();
-
-                    ArrayList<Entry> entries=new ArrayList<>();
-                    for(int k=0; k<= 31; k++) {
-
-                       // entries.add(new Entry(graphData.getScoreValue(),graphData.getDayValue());
-
-                    }
-
-
-                }
-
-            }
-            break;
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-//        XAxis xAxis = lineChart.getXAxis();
-//        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-//        xAxis.setValueFormatter(new MyXAxisValueFormatter());
-//        xAxis.setLabelsToSkip(0);
+//        TextView tvMonth=(TextView)findViewById(R.id.tvMonth);
 //
-//        //차트의 왼쪽 Axis
-//        YAxis leftAxis=lineChart.getAxisLeft();
-//        leftAxis.setDrawGridLines(false); //그리드 라인 없앰
-//        leftAxis.mAxisMinimum=1f; //최소값
-//        leftAxis.mAxisMaximum=10f; //최댓값
+//        Calendar calendar= Calendar.getInstance();
+//        SimpleDateFormat format=new SimpleDateFormat( "mm");
+//        String date=format.format(Calendar.getInstance().getTime());
+//        tvMonth.setText(date);
 //
-//        //차트의 오른쪽 Axis
-//        YAxis rightAxis=lineChart.getAxisRight();
-//        rightAxis.setEnabled(false); //rightAxis 비활성화 함
+//        for(int i=0; i< chartList.size(); i++) {
+//            ChartData chartData=chartList.get(i);
+//            //차트데이터를 가져와서 String 변수에 담는다
+//            String sameMonth=chartData.getMonth();
 //
-//        LineData data=new LineData();
-//        lineChart.setData(data); //LineData를 세팅함
+//            if (date.equals(sameMonth)) {
+//                String sameDay=chartData.getDay();
+//                String sameFeel=chartData.getScore();
+//
+//                for(int j=0; j<sameMonth.length(); j++){
+//                    String dayPoint = chartData.getDay();
+//                    float dayScore = Float.parseFloat(chartData.getScore());
+//                    GraphData graphData=new GraphData(dayPoint,dayScore);
+//                    ArrayList<GraphData> graphDataList=new ArrayList<>();
+//                    ArrayList<Entry> entries=new ArrayList<>();
+//                    for(int k=0; k<= 31; k++) {
+//                       // entries.add(new Entry(graphData.getScoreValue(),graphData.getDayValue());
+//                    }
+//                }
+//            }
+//            break;
+//        }
 
 
 
 
         //헬로 안드로이드차트 부분
-//        lineChartView=findViewById(R.id.chart);
-//
-//        List yAxisValues=new ArrayList();
-//        List axisValues=new ArrayList();
-//
+        lineChartView=findViewById(R.id.chart);
+        tvYear=(TextView)findViewById(R.id.activity_statistic_tv_year);
+        tvMonth=(TextView)findViewById(R.id.activity_statistic_tv_month);
+
+        //현재 날짜 받아오기
+        Date currentTime=Calendar.getInstance().getTime();
+        SimpleDateFormat yearFormat=new SimpleDateFormat("yyyy", Locale.KOREA);
+        SimpleDateFormat monthFormat=new SimpleDateFormat("MM", Locale.KOREA);
+        currentYear=yearFormat.format(currentTime);
+        currentMonth=monthFormat.format(currentTime);
+
+        //현재날짜로 셋텍스트해줌
+        tvYear.setText(currentYear);
+        tvMonth.setText(currentMonth);
+        Log.d("현재날짜","(년,월) : "+currentYear+","+currentMonth);
+
+        List yAxisValues=new ArrayList(); // y축 배열
+        List axisValues=new ArrayList(); // x축 배열
+
+
+//        List<AxisValue> axisValues=new ArrayList<>();
+
+        List<PointValue> values=new ArrayList<>();
+        for (ChartData chartData : chartList) {
+            String chartYear=chartData.getYear();
+            String chartMonth=chartData.getMonth();
+            float chartDay= Float.parseFloat(chartData.getDay());
+            int chartFeelings=Integer.parseInt(chartData.getScore());
+
+            if(chartYear.equals(currentYear) && chartMonth.equals(currentMonth)){
+                values.add(new PointValue(chartDay,chartFeelings));
+                Log.d("value 확인","size " + values.size() +values);
+                Log.d("데이터 add 후 ","(chartDay ,chartFeelings ) "+chartDay+","+chartFeelings );
+            }
+        }
+
+
 //        Line line=new Line(yAxisValues).setColor(Color.parseColor("#9C27B0"));
-//
-////        int position=adapter.itemPosition;
-////        ChartData chartData=chartList.get(position);
-//
-//
+
+
+
 //        for(int i=0; i<axisData.length; i++){
 //            axisValues.add(i,new AxisValue(i).setLabel(axisData[i]));
 //        }
@@ -300,38 +269,47 @@ public class StatisticActivity extends AppCompatActivity {
 //        for (int i = 0; i < yAxisData.length; i++) {
 //            yAxisValues.add(new PointValue(i, yAxisData[i]));
 //        }
-//
-//
-//        List lines=new ArrayList();
-//        lines.add(line);
-//
-//        LineChartData data=new LineChartData();
-//        data.setLines(lines);
-//
-//        Axis axis=new Axis();
-//        axis.setValues(axisValues);
-//        axis.setTextSize(16);
-//        axis.setTextColor(Color.parseColor("#03A9F4"));
-//        data.setAxisXBottom(axis);
-//
-//
-//        Axis yAxis = new Axis(); yAxis.setName("월 별 기분통계");
-//        yAxis.setTextColor(Color.parseColor("#03A9F4"));
-//        yAxis.setTextSize(16);
-//        data.setAxisYLeft(yAxis);
-//
-//        lineChartView.setLineChartData(data);
-//        Viewport viewport = new Viewport(lineChartView.getMaximumViewport());
-//        // y축 최댓값
-//        // 기분점수 최대가 10이여서 10이다다
-//       viewport.top = 10;
-//        lineChartView.setMaximumViewport(viewport);
-//        lineChartView.setCurrentViewport(viewport);
 
+
+
+        Line line=new Line(values).setColor(Color.parseColor("#9C27B0")).setCubic(true);
+        List lines=new ArrayList();
+        lines.add(line);
+        LineChartData data=new LineChartData();
+        data.setLines(lines);
+        LineChartView chart=new LineChartView(context);
+
+        //x축
+        Axis axis=new Axis();
+        axis.setValues(axisValues);
+
+        axis.setTextSize(14);
+        axis.setTextColor(Color.parseColor("#03A9F4"));
+        data.setAxisXBottom(axis);
+
+        //y축
+        Axis yAxis = new Axis();
+        yAxis.setName("월 별 기분통계");
+        yAxis.setTextColor(Color.parseColor("#03A9F4"));
+        yAxis.setTextSize(14);
+        data.setAxisYLeft(yAxis);
+
+        lineChartView.setLineChartData(data);
+        Viewport viewport = new Viewport(lineChartView.getMaximumViewport());
+        // y축 최댓값
+        // 기분점수 최대가 10이여서 10이다다
+        viewport.top = 10;
+        lineChartView.setMaximumViewport(viewport);
+        lineChartView.setCurrentViewport(viewport);
+
+
+        chart.setLineChartData(data);
+        //포인트 클릭리스너
+//        chart.setOnValueTouchListener(new ValueTouchListener());
+//        chart.getOnValueTouchListener();
 
 
     }//onCreate
-
 
     public boolean onOptionsItemSelected(MenuItem item){
 
@@ -385,7 +363,19 @@ public class StatisticActivity extends AppCompatActivity {
     }
 
 
+    private class ValueTouchListener implements LineChartOnValueSelectListener{
 
+        @Override
+        public void onValueSelected(int lineIndex, int pointIndex, PointValue value) {
+            Toast.makeText(StatisticActivity.this, "값: "+value , Toast.LENGTH_SHORT).show();
+            Log.d("포인트클릭", "onValueSelected: "+value + pointIndex+lineIndex);
+        }
+
+        @Override
+        public void onValueDeselected() {
+
+        }
+    }
 
 
 }//class

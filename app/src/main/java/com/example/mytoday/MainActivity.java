@@ -388,8 +388,8 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.menu_statistic:
                 Toast.makeText(this, "통계버튼을 눌렀습니다.", Toast.LENGTH_SHORT).show();
-               // Intent data=new Intent(this,StatisticActivity.class);
-                Intent data=new Intent(this,StatActivity.class);
+                Intent data=new Intent(this,StatisticActivity.class);
+               // Intent data=new Intent(this,StatActivity.class);
                 startActivity(data);
                 break;
 

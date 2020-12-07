@@ -49,7 +49,7 @@ public class StatActivity extends AppCompatActivity {
     ArrayList<ChartData> chartList;
     ImageButton beforeBtn, afterBtn;
     LineChart lineChart;
-    private ArrayList<Entry> values=new ArrayList<>();
+    //private ArrayList<Entry> values=new ArrayList<>();
 
     String[] mDays={"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18"
             ,"19","20","21","22","23","24","25","26","27","28","29","30","31"};
@@ -93,6 +93,7 @@ public class StatActivity extends AppCompatActivity {
         lineChart=findViewById(R.id.activity_stat_chart);
         setChart(chartList);
 
+
         beforeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,9 +103,7 @@ public class StatActivity extends AppCompatActivity {
                 currentMonth=String.valueOf(beforeMonth);
                 Log.d("beforeBtn클릭리스너", "currentMonth: "+currentMonth);
                 tvMonth.setText(currentMonth);
-                lineChart.invalidate();
-                lineChart.clear();
-
+               // lineChart.clear();
                 setChart(chartList);
 
             }
@@ -139,12 +138,12 @@ public class StatActivity extends AppCompatActivity {
         7. 이전버튼을 누르면 온클릭리스너에서 위에랑 똑같긴한데 현재날짜에서 월을 -1해준 월로만 바꾸고 그래프를 새로그려준다*/
 
     public void setChart(ArrayList<ChartData> records){
-       // lineChart.invalidate(); //차트 초기화 작업
         //차트 데이터 셋에 담겨질 데이터
-      // ArrayList<Entry> values=new ArrayList<>();
+      ArrayList<Entry> values=new ArrayList<>();
 
        //values에 데이터를 담는 과정
         for (ChartData chartData : records) {
+
            String chartYear=chartData.getYear();
            String chartMonth=chartData.getMonth();
            int chartDay=Integer.parseInt(chartData.getDay());
@@ -152,7 +151,8 @@ public class StatActivity extends AppCompatActivity {
            if(chartYear.equals(currentYear) && chartMonth.equals(currentMonth)){
 //               Log.d("데이터 add 전 ","(chartDay ,chartFeelings ) "+chartDay+","+chartFeelings );
 //               Log.d("value 확인 전","size " + values.size() +values);
-               values.add(new Entry(chartDay, chartFeelings));
+               // 이 라이브러리가 float값을 입력으로 가져오므로 int를 float으로 캐스팅한다
+               values.add(new Entry((float)chartDay,chartFeelings));
                //values.add(new Entry(chartFeelings, chartDay));
                Log.d("value 확인 후","size " + values.size() +values);
                Log.d("데이터 add 후 ","(chartDay ,chartFeelings ) "+chartDay+","+chartFeelings );
@@ -182,6 +182,10 @@ public class StatActivity extends AppCompatActivity {
         xAxis.setValueFormatter(new GraphAxisValueFormatter(mDays)); // mDays 는 일을 가지고있는 string배열
         xAxis.setDrawGridLines(true);
         xAxis.setEnabled(true);
+        xAxis.setAxisMinimum(0.0f);
+        xAxis.setLabelCount(values.size(),true);
+//        xAxis.setAxisMaximum (??);
+//        xAxis.setLabelCount (??);
        // xAxis.setLabelCount(10,true); //X축의 데이터를 최대 몇개 까지 나타낼지에 대한 설정 5개 force가 true 이면 반드시 보여줌
 
         // y축 설정
@@ -212,14 +216,13 @@ public class StatActivity extends AppCompatActivity {
         lineChart.setMarker(marker);
 
         //lineChart.setVisibleYRange(1,10);
-        //lineChart.setVisibleXRange(1,31);
        // lineChart.setVisibleYRangeMinimum();
         lineChart.setVisibleXRangeMinimum(60*60*24*1000*5); // 라인차트에서 최대로 보여질 X축 데이터의 설정
 
         lineData.notifyDataChanged();
         lineChart.setData(lineData);
         lineChart.notifyDataSetChanged();
-        lineChart.invalidate();
+        lineChart.invalidate();// 새로고침
 
     }
 
