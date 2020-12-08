@@ -28,7 +28,7 @@
     <permission
         android:name="com.example.my38_locationmap.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
-
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
@@ -58,13 +58,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Mytoday">
-        <activity android:name=".MyMarkerView"></activity>
-        <activity android:name=".StatActivity" />
-        <activity android:name=".LockScreenActivity" />
-        <activity android:name=".AlarmActivity">
+        <activity android:name=".AlarmSettingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.sec" />
             </intent-filter>
+        </activity>
+        <activity android:name=".STActivity" />
+        <activity android:name=".MyMarkerView"
+            tools:ignore="Instantiatable" />
+        <activity android:name=".StatActivity" />
+        <activity android:name=".LockScreenActivity" />
+        <activity android:name=".AlarmActivity">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.sec" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity android:name=".SplashActivity">
             <intent-filter>
@@ -82,13 +89,24 @@
         <!-- <action android:name="android.intent.action.BOOT_COMPLETED" /> -->
         <!-- </intent-filter> -->
         <!-- </receiver> -->
+
+<!--        <receiver-->
+<!--            android:name=".AlarmReceiver"-->
+<!--            android:process=":remote">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.BOOT_COMPLETED" />-->
+<!--            </intent-filter>-->
+<!--        </receiver>-->
+
         <receiver
-            android:name=".AlarmReceiver"
-            android:process=":remote">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
+            android:name=".AlarmBroadcastReceiver"
+            android:exported="false"
+            android:enabled="true">
         </receiver>
+
+        <service
+            android:name=".AlarmService"
+            android:exported="false" />
         <receiver
             android:name=".ScreenReceiver"
             android:enabled="true"
@@ -128,6 +146,10 @@
         </provider>
 
         <service android:name=".ScreenService" />
+
+
+
+
     </application>
 
 </manifest>

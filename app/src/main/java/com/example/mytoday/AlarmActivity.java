@@ -225,10 +225,6 @@ public class AlarmActivity extends AppCompatActivity {
         alarmManager.cancel(pIntent);
     }// unregist()..
 
-
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_swipe, menu) ;

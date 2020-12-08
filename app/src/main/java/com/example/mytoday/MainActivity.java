@@ -31,6 +31,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -276,6 +278,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < diaryList.size(); i++) {
             set.add(diaryList.get(i).getJSONObject().toString());
         }
+
         editor.putStringSet(SPECIFIC_JSON, set);
         editor.apply();
     }
@@ -300,8 +303,8 @@ public class MainActivity extends AppCompatActivity {
                     String loadLocation = jsonObject.getString("saveLocation");
 
                     DiaryData saveDiary = new DiaryData(loadContent, loadFeelings, loadDate, loadTime,loadPhoto, loadLocation);
-
                     items.add(saveDiary);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -389,6 +392,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_statistic:
                 Toast.makeText(this, "통계버튼을 눌렀습니다.", Toast.LENGTH_SHORT).show();
                 Intent data=new Intent(this,StatisticActivity.class);
+                //Intent data=new Intent(this,STActivity.class);
                // Intent data=new Intent(this,StatActivity.class);
                 startActivity(data);
                 break;

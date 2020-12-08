@@ -22,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -40,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -51,46 +53,45 @@ import lecho.lib.hellocharts.listener.ColumnChartOnValueSelectListener;
 import lecho.lib.hellocharts.listener.LineChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
+import lecho.lib.hellocharts.model.Column;
+import lecho.lib.hellocharts.model.ColumnChartData;
 import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.model.SubcolumnValue;
+import lecho.lib.hellocharts.model.ValueShape;
 import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.util.ChartUtils;
+import lecho.lib.hellocharts.view.ColumnChartView;
 import lecho.lib.hellocharts.view.LineChartView;
 
 public class StatisticActivity extends AppCompatActivity {
 
     //선 그래프
-    private LineChart lineChart;
     private static String SPECIFIC_JSON="DIARY_SAVED_FILE";
     ArrayList<DiaryData> diaryList;
-    DiaryAdapter adapter;
     ArrayList<ChartData> chartList;
     ArrayList<String> labelList = new ArrayList<>(); // ArrayList 선언
     static Context context;
     LineChartView lineChartView;
-    // x축 x값
-    String[] axisData={"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18"
-                        ,"19","20","21","22","23","24","25","26","27","28","29","30","31"};
 
+    // x축 x값
+    String[] axisData={"0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18"
+                        ,"19","20","21","22","23","24","25","26","27","28","29","30","31"};
     // y값 x축에 대응하는 , 여기서는 기분점수
     int[] yAxisData={1,2,3,4,5,6,7,8,9,10};
-
-
     TextView tvYear;
     TextView tvMonth;
     String currentYear,currentMonth;
     public final static String[] days=new String[]{"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18"
                         ,"19","20","21","22","23","24","25","26","27","28","29","30","31"};
-
     public final static Integer[] scores=new Integer[]{1,2,3,4,5,6,7,8,9,10};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistic);
-
         context=this;
         //툴바 설정
         Toolbar toolbar=findViewById(R.id.toolbar);
@@ -99,13 +100,9 @@ public class StatisticActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_ios_24);
 
-
         ImageButton beforeBtn=(ImageButton) findViewById(R.id.activity_statistic_btn_before);
-        ImageButton afterBtn=(ImageButton) findViewById(R.id.activity_statistic_btn_after);
+    //    ImageButton afterBtn=(ImageButton) findViewById(R.id.activity_statistic_btn_after);
 
-
-
- //       lineChart = (LineChart) findViewById(R.id.chart);
         //만약 저장되어있는 리스트가 없다면 diaryList객체를 생성한다
         if(null == diaryList){
             diaryList=new ArrayList<DiaryData>();
@@ -117,65 +114,8 @@ public class StatisticActivity extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
-
         // diaryList ->  {2020-11-14, 7}
-
         Log.e("chartList","불러온다 : "+chartList.get(0)+chartList.get(1));
-
-
-
-
-        // x축 설정 (일)
-//        XAxis xAxis=lineChart.getXAxis();
-//        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); //아래쪽에 x축 표시
-//        xAxis.setTextSize(10f); //x축 텍스트 사이즈
-//
-//        //xAxis.setValueFormatter(new GraphAxisValueFormatter());
-//
-//        //차트의 왼쪽 Axis
-//        YAxis leftAxis=lineChart.getAxisLeft();
-//        leftAxis.setDrawGridLines(false); //그리드 라인 없앰
-//
-//        //차트의 오른쪽 Axis
-//        YAxis rightAxis=lineChart.getAxisRight();
-//        rightAxis.setEnabled(false); //rightAxis 비활성화 함
-//
-//        LineData data=new LineData();
-//        lineChart.setData(data); //LineData를 세팅함
-
-
-//        ArrayList<String> labels = new ArrayList<String>();
-//        labels.add("1");
-//        labels.add("2");
-//        labels.add("3");
-//        labels.add("4");
-//        labels.add("5");
-//        labels.add("6");
-//        labels.add("7");
-//        labels.add("8");
-//        labels.add("9");
-//        labels.add("10");
-//        labels.add("11");
-//        labels.add("12");
-//        labels.add("13");
-//        labels.add("14");
-//        labels.add("15");
-//        labels.add("16");
-//        labels.add("17");
-//        labels.add("18");
-//        labels.add("19");
-//        labels.add("20");
-//        labels.add("21");
-//        labels.add("22");
-//        labels.add("23");
-//        labels.add("24");
-//        labels.add("25");
-//        labels.add("26");
-//        labels.add("27");
-//        labels.add("28");
-//        labels.add("29");
-//        labels.add("30");
-//        labels.add("31");
 
         /*
         1.  x축에 일 을 표현할 1~31 하드코딩, y축에 기분점수를 표현 1~10 하드코딩
@@ -186,40 +126,6 @@ public class StatisticActivity extends AppCompatActivity {
         6. 데이터를 담았으면 일, 기분점수를 arraylist에 담는다
         7. 데이터들을 그래프에 set해준다
         */
-
-//        TextView tvMonth=(TextView)findViewById(R.id.tvMonth);
-//
-//        Calendar calendar= Calendar.getInstance();
-//        SimpleDateFormat format=new SimpleDateFormat( "mm");
-//        String date=format.format(Calendar.getInstance().getTime());
-//        tvMonth.setText(date);
-//
-//        for(int i=0; i< chartList.size(); i++) {
-//            ChartData chartData=chartList.get(i);
-//            //차트데이터를 가져와서 String 변수에 담는다
-//            String sameMonth=chartData.getMonth();
-//
-//            if (date.equals(sameMonth)) {
-//                String sameDay=chartData.getDay();
-//                String sameFeel=chartData.getScore();
-//
-//                for(int j=0; j<sameMonth.length(); j++){
-//                    String dayPoint = chartData.getDay();
-//                    float dayScore = Float.parseFloat(chartData.getScore());
-//                    GraphData graphData=new GraphData(dayPoint,dayScore);
-//                    ArrayList<GraphData> graphDataList=new ArrayList<>();
-//                    ArrayList<Entry> entries=new ArrayList<>();
-//                    for(int k=0; k<= 31; k++) {
-//                       // entries.add(new Entry(graphData.getScoreValue(),graphData.getDayValue());
-//                    }
-//                }
-//            }
-//            break;
-//        }
-
-
-
-
         //헬로 안드로이드차트 부분
         lineChartView=findViewById(R.id.chart);
         tvYear=(TextView)findViewById(R.id.activity_statistic_tv_year);
@@ -236,13 +142,33 @@ public class StatisticActivity extends AppCompatActivity {
         tvYear.setText(currentYear);
         tvMonth.setText(currentMonth);
         Log.d("현재날짜","(년,월) : "+currentYear+","+currentMonth);
+        setChart(chartList);
 
-        List yAxisValues=new ArrayList(); // y축 배열
-        List axisValues=new ArrayList(); // x축 배열
+        //이전버튼
+        beforeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar=Calendar.getInstance();
+                int beforeMonth=calendar.get(Calendar.MONTH); //이전달
+                Log.d("이전날짜", "beforeMonth" +beforeMonth);
+                currentMonth=String.valueOf(beforeMonth);
+                Log.d("beforeBtn클릭리스너", "currentMonth: "+currentMonth);
+                tvMonth.setText(currentMonth);
+                lineChartView.clearAnimation();
+                setChart(chartList);
+            }
+        });
 
+//        afterBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                lineChartView.clearAnimation();
+//                setChart(chartList);
+//            }
+//        });
+    }//onCreate
 
-//        List<AxisValue> axisValues=new ArrayList<>();
-
+    public void setChart(ArrayList<ChartData> records){
         List<PointValue> values=new ArrayList<>();
         for (ChartData chartData : chartList) {
             String chartYear=chartData.getYear();
@@ -257,32 +183,26 @@ public class StatisticActivity extends AppCompatActivity {
             }
         }
 
-
 //        Line line=new Line(yAxisValues).setColor(Color.parseColor("#9C27B0"));
-
-
-
 //        for(int i=0; i<axisData.length; i++){
 //            axisValues.add(i,new AxisValue(i).setLabel(axisData[i]));
 //        }
+
 //
 //        for (int i = 0; i < yAxisData.length; i++) {
 //            yAxisValues.add(new PointValue(i, yAxisData[i]));
 //        }
 
-
-
         Line line=new Line(values).setColor(Color.parseColor("#9C27B0")).setCubic(true);
+        line.setShape(ValueShape.CIRCLE);
         List lines=new ArrayList();
         lines.add(line);
         LineChartData data=new LineChartData();
         data.setLines(lines);
-        LineChartView chart=new LineChartView(context);
 
         //x축
         Axis axis=new Axis();
-        axis.setValues(axisValues);
-
+        //      axis.setValues(axisValues);
         axis.setTextSize(14);
         axis.setTextColor(Color.parseColor("#03A9F4"));
         data.setAxisXBottom(axis);
@@ -299,22 +219,18 @@ public class StatisticActivity extends AppCompatActivity {
         // y축 최댓값
         // 기분점수 최대가 10이여서 10이다다
         viewport.top = 10;
+        viewport.bottom=1;
         lineChartView.setMaximumViewport(viewport);
         lineChartView.setCurrentViewport(viewport);
-
-
-        chart.setLineChartData(data);
+        lineChartView.setLineChartData(data);
         //포인트 클릭리스너
-//        chart.setOnValueTouchListener(new ValueTouchListener());
-//        chart.getOnValueTouchListener();
+        lineChartView.setOnValueTouchListener(new ValueTouchListener());
+        lineChartView.getOnValueTouchListener();
+    }
 
-
-    }//onCreate
 
     public boolean onOptionsItemSelected(MenuItem item){
-
         switch(item.getItemId()){
-
             case android.R.id.home:
                 Toast.makeText(this, "뒤로버튼을 눌렀습니다.", Toast.LENGTH_SHORT).show();
                 finish();
@@ -322,7 +238,6 @@ public class StatisticActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     //diaryList 불러오는 메서드
     public static ArrayList<ChartData> loadData() {
@@ -350,9 +265,15 @@ public class StatisticActivity extends AppCompatActivity {
                     }
                     String feel=chooseData.getFeelings();
                     ChartData chartData=new ChartData(year,month,day,feel);
-
                     Log.e("ChartData ","year :"+year +" month : "+month+" day : "+day +" feel : "+chartData.getScore());
                     lists.add(chartData);
+
+//                    Collections.sort(lists, new Comparator<ChartData>() {
+//                        @Override
+//                        public int compare(ChartData o1, ChartData o2) {
+//                            return o1.getDay().compareTo(o2.getDay());
+//                        }
+//                    });
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -364,18 +285,14 @@ public class StatisticActivity extends AppCompatActivity {
 
 
     private class ValueTouchListener implements LineChartOnValueSelectListener{
-
         @Override
         public void onValueSelected(int lineIndex, int pointIndex, PointValue value) {
-            Toast.makeText(StatisticActivity.this, "값: "+value , Toast.LENGTH_SHORT).show();
+            Toast.makeText(StatisticActivity.this, "일, 기분: "+value , Toast.LENGTH_SHORT).show();
             Log.d("포인트클릭", "onValueSelected: "+value + pointIndex+lineIndex);
         }
-
         @Override
         public void onValueDeselected() {
-
         }
     }
-
 
 }//class

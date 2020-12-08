@@ -24,11 +24,12 @@ import java.util.Set;
 @SuppressLint("UseSwitchCompatOrMaterialCode")
 public class SettingActivity extends AppCompatActivity {
 
-    Switch passwordSwitch;
+    Switch passwordSwitch,alarmSwitch;
     String savePassword;
     boolean isOn=false;
     boolean lock=false;
     Context context;
+    boolean isAlarm=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +74,8 @@ public class SettingActivity extends AppCompatActivity {
         alarmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(SettingActivity.this,AlarmActivity.class);
+                //Intent intent=new Intent(SettingActivity.this,AlarmActivity.class);
+                Intent intent=new Intent(SettingActivity.this,AlarmSettingActivity.class);
                 startActivity(intent);
             }
         });
